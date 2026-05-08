@@ -65,6 +65,8 @@ Register
 
 опис
 
+![СвГоловнийЄкран](https://github.com/BloodyLord02/MobileLabsRN2026/blob/main/lab__5/1.jpg)
+
 ## Навігація
 
 Використано Expo Router
