@@ -1,50 +1,138 @@
-# Welcome to your Expo app 👋
+# Лабораторна робота 5
+Для запуску застосунку npx expo start
+## Авторизація користувача
+Реалізовано глобальний контекст AuthContext
+Підтримуються функції:
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+реєстрація користувача
 
-## Get started
+вхід у систему
 
-1. Install dependencies
+вихід з акаунта
 
-   ```bash
-   npm install
-   ```
+Перевірка авторизації виконується через захищений layout
 
-2. Start the app
+Неавторизовані користувачі автоматично перенаправляються на екран входу
 
-   ```bash
-   npx expo start
-   ```
+## Реєстрація та вхід
+Створені окремі екрани:
 
-In the output, you'll find options to open the app in a
+Login
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Register
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Реалізована перевірка:
 
-## Get a fresh project
+чи існує акаунт
 
-When you're ready, run:
+правильність введених даних
 
-```bash
-npm run reset-project
+співпадіння паролів при реєстрації
+
+Після успішної авторизації виконується перехід до головного екрану
+
+![СвГоловнийЄкран](https://github.com/BloodyLord02/MobileLabsRN2026/blob/main/lab__5/4.jpg)
+![СвГоловнийЄкран](https://github.com/BloodyLord02/MobileLabsRN2026/blob/main/lab__5/3.jpg)
+
+## Каталог товарів
+Реалізовано екран з використанням FlatList
+
+Відображаються:
+
+зображення товару
+
+назва
+
+ціна
+
+Дані зберігаються у вигляді масиву об’єктів
+
+![СвГоловнийЄкран](https://github.com/BloodyLord02/MobileLabsRN2026/blob/main/lab__5/2.jpg)
+
+## Детальна інформація про товар
+
+Використано динамічні маршрути [id]
+
+Реалізовано сторінку деталей товару
+
+Відображається:
+
+зображення
+
+назва
+
+ціна
+
+опис
+
+## Навігація
+
+Використано Expo Router
+
+Реалізовано:
+
+file-based routing
+
+групи маршрутів (auth) та (app)
+
+<Link> для переходів
+
+router.push/replace для програмної навігації
+
+## Висновки
+
+### 1. Яким чином за допомогою Expo Router реалізується перенаправлення неавторизованого користувача?
+
+Перенаправлення реалізується через перевірку стану авторизації в `_layout.jsx`.
+
+Якщо користувач не авторизований, використовується компонент:
+
+```jsx
+<Redirect href="/login" />
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Це автоматично перенаправляє користувача на екран входу до завантаження захищених маршрутів.
 
-## Learn more
+### 2. У чому полягає різниця між використанням компонента <Link> та метода router.push()?
+   
+< Link >-декларативна навігація (через JSX). Використовується безпосередньо в UI.
 
-To learn more about developing your project with Expo, look at the following resources:
+router.push()-програмна навігація через код (наприклад, після логіну або обробки події).
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 3. Як працюють динамічні маршрути в Expo Router і як отримати передані параметри?
 
-## Join the community
+Динамічні маршрути створюються через файли в квадратних дужках:
+```jsx
+app/details/[id].jsx
+```
+Приклад URL:
+```jsx
+/details/3
+```
+Отримання параметрів виконується через хук:
+```jsx
+const { id } = useLocalSearchParams();
+```
+Після цього можна знайти потрібний об’єкт у масиві даних за цим id.
 
-Join our community of developers creating universal apps.
+### 4. Чому стан авторизації доцільно зберігати у глобальному контексті (React Context), а не в локальному стані компонента?
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Глобальний контекст використовується тому що:
+
+стан доступний у всіх компонентах
+не потрібно передавати props через багато рівнів вкладеності
+зручно керувати авторизацією в усьому застосунку
+
+Локальний state підходить лише для одного компонента і не підходить для глобальної логіки входу.
+
+### 5. Для чого використовуються групи маршрутів ((folderName)) і як вони впливають на URL-адресу?
+
+Групи маршрутів ((auth), (app)) використовуються для логічної організації структури проєкту.
+
+Вони дозволяють:
+
+розділяти публічні та захищені екрани
+структурувати код проєкту
+не впливають на URL-адресу (ігноруються в маршрутизації)
+
+Якщо хочеш — можу ще :contentReference[oaicite:0]{index=0} або :contentReference[oaicite:1]{index=1}.
